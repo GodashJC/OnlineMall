@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+
+</head>
+<body>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/bootstrap/js/bootstrap.js"></script>
+
+{% csrf_token %}
+
+<div class="jumbotron">
+    <h1 class="text-center">模拟支付 <small>支付接口有待完成</small></h1>
+    <p class="text-center">运动支付宝沙箱环境进行调配中,此为模拟支付</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div style="color: red;font-size: 50px" >订单总价:{{ ordertooay.sum_price }}元</div>
+            <div>订单号:<span name="num">{{ ordertooay.order_num }}</span></div>
+            <div>商品明细:{{ ordertooay.details }}</div>
+            <div>
+                <span>联系人:{{ ordertooay.user.username }}&nbsp&nbsp&nbsp&nbsp</span>
+                <span>电话:{{ ordertooay.user.tel }}&nbsp&nbsp&nbsp&nbsp</span>
+                <span>地址:{{  ordertooay.user.address }}</span>
+            </div>
+
+
+        </div>
+    </div>
+    <a href="#" onclick="javascript:history.back(-1);" class="btn btn-lg btn-warning pull-right">返回</a>
+{#    <a name="gopay" class="btn btn-success btn-lg pull-right" href="" role="button">支付成功</a>#}
+    <input type="button" class="btn btn-success pull-right btn-lg gopay" value='支付'>
+
+</div>
+
+<script>
+    $(".gopay").click(function () {
+
+        $.ajax({
+            url:'',
+            type:"POST",
+            data: {
+                dingdanhao: $("[name=num]").val(),
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            },
+            success:function (response) {
+                if (response.code=="200"){
+                    location.href = "/showorder/"
+                }else{
+                    window.alert("支付中断,请重试")
+                }
+
+            }
+
+
+        })
+
+
+
+    })
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
+

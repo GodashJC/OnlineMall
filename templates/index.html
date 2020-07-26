@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品项目1</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+</head>
+
+<body>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/bootstrap/js/bootstrap.js"></script>
+
+
+<div class="page-header">
+    <h1>WELCOME!<small> This is a website for me to learn and test,by @<a href="">JASONCHAN</a>.</small></h1>
+</div>
+
+{#{% csrf_token %}#}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="/index/0">商品列表</a></li>
+                <li role="presentation"><a href="/showorder/">订单查看</a></li>
+                <li role="presentation" class="pull-right"><a href="/logout/">Logout</a></li>
+                <li role="presentation" class="pull-right"><a href="/edit_user/">个人信息修改</a></li>
+{#                <li role="presentation" class="pull-right btn" style="color: cornflowerblue" ><p name="showhide">购物车</p></li>#}
+                <li role="presentation" class="pull-right">当前登陆用户：{{ login_user }}</li>
+                <br>
+                <li role="presentation" class="pull-right">上次登陆时间：{{ pre_login }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <br><br>
+
+</div>
+
+<div class="container col-md-10 col-md-offset-1">
+    <div class="row">
+        <div>
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="/index/0">所有商品</a></li>
+                <li role="presentation"><a href="/index/1">吃的</a></li>
+                <li role="presentation"><a href="/index/2">喝的</a></li>
+                <li role="presentation"><a href="/index/3">玩的</a></li>
+            </ul>
+
+        </div>
+
+        {#渲染商品列表#}
+        {% for good in goods %}
+
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <img src="{{good.image_path}}" alt="商品" style="width: 200px;height:150px">
+                    <div class="caption">
+                        <h3 name="title">{{good.title}}<p class="pull-right" style="color:red">单价：{{good.price}}元</p></h3>
+                        <p><a href="/gooddetails/{{good.id}}" class="btn btn-primary" role="button">详情</a>
+                            <a href="/add2cart/{{good.id}}" class="btn btn-success pull-right" role="button">加购物车</a></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <br><br><br><br><br><br>
+
+</div>
+
+
+{#底部购物车窗口#}
+<nav class="navbar navbar-default navbar-fixed-bottom ">
+    <div class="container text-center btn btn-info collapse col-md-offset-1" name="showcart">展开购物车</div>
+    <div class="container " name="buttom_bar">
+        <div class="center-block btn btn-info" name="hidecart">收起购物车</div>
+        <h4>购物车</h4>
+        <table class="table table-hover table-striped ">
+            <thead>
+            <tr>
+                <th>商品名称</th>
+                <th>单价</th>
+                <th>数量</th>
+
+            </tr>
+            </thead>
+            {% for shopping in shopping_carts %}
+                <tbody>
+                <tr>
+                    <td>{{ shopping.item.title }}</td>
+                    <td>{{ shopping.item.price }}</td>
+                    <td>
+                        <a href="/sub2cart/{{ shopping.item.id }}" class="btn btn-warning">-</a>
+                        {{ shopping.num }}
+                        <a href="/add2cart/{{ shopping.item.id }}" class="btn btn-danger">+</a>
+                    </td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+        <a href="/add2order" class="btn btn-success pull-right" role="button" >生成订单</a>
+        <p class="pull-right" style="color: red;font-size: 40px">total price：{{ sum_price }}元 </p>
+    </div>
+    <br>
+</nav>
+
+
+{#暂且放弃用ajax加入购物车#}
+<script>
+    $("[name=hidecart]").click(function () {
+        $("[name=buttom_bar]").addClass("collapse")
+        $("[name=showcart]").removeClass("collapse")
+
+    })
+
+    $("[name=showcart]").click(function () {
+        $(this).addClass("collapse"),
+        $("[name=buttom_bar]").removeClass("collapse")
+
+    })
+
+</script>
+
+
+
+
+</body>
+
+</html>

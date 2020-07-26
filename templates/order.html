@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史查看订单</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+</head>
+<body>
+
+<script src="/static/js/jquery.js"></script>
+<script src="/static/bootstrap/js/bootstrap.js"></script>
+
+<div class="page-header">
+    <h1 class="text-center">历史订单查看 <small></small></h1>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div>未支付订单</div>
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>用户名</th>
+                    <th>电话</th>
+                    <th>收货地址</th>
+                    <th>日期</th>
+                    <th>总价</th>
+                    <th>订单状态</th>
+                    <th>详情</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                {% for order in order_list %}
+                    <tbody>
+                    <tr>
+                        <td>{{ order.order_num }}</td>
+                        <td>{{ order.user }}</td>
+                        <td>{{ order.user.tel }}</td>
+                        <td>{{ order.user.address }}</td>
+                        <td>{{ order.date }}</td>
+                        <td>{{ order.sum_price }}</td>
+                        <td>{{ order.get_status_display }}</td>
+                        <td>{{ order.details }}</td>
+                        <td>
+                            <a href="/pay/{{ order.id }}" class="btn btn-success">去付款</a>
+                            <a href="/deleteorder/{{ order.id }}"  class="btn btn-danger">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                {% endfor %}
+
+            </table>
+            <div>已支付订单</div>
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>用户名</th>
+                    <th>电话</th>
+                    <th>收货地址</th>
+                    <th>日期</th>
+                    <th>总价</th>
+                    <th>订单状态</th>
+                    <th>详情</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                {% for order in order_list_done %}
+                    <tbody>
+                    <tr>
+                        <td>{{ order.order_num }}</td>
+                        <td>{{ order.user }}</td>
+                        <td>{{ order.user.tel }}</td>
+                        <td>{{ order.user.address }}</td>
+                        <td>{{ order.date }}</td>
+                        <td>{{ order.sum_price }}</td>
+                        <td>{{ order.get_status_display }}</td>
+                        <td>{{ order.details }}</td>
+                        <td>
+                            <a href="/deleteorder/{{ order.id }}"  class="btn btn-danger">删除</a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {#    <a href="/index/0/" class="btn btn-warning pull-right">返回</a></p>#}
+    <a href="{% url "shouye" %}" class="btn btn-warning pull-right">返回</a></p>
+
+</div>
+
+</body>
+</html>

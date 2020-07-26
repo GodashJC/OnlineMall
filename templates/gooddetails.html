@@ -1,0 +1,26 @@
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class="text-center">商品详情</h1>
+            <div class="jumbotron">
+                <h2>{{good.title}}</h2>
+                <img src="{{ good.image_path }}" alt="{{ good.title }}">
+                <p>{{good.details}}</p>
+                <p><a class="btn btn-primary" href="/add2cart/{{ good.id }}" role="button">加入购物车</a>
+                <a href="#" onclick="javascript:history.back(-1);" class="btn btn-warning pull-right">返回到上一页</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

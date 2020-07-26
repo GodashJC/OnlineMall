@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改信息</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+</head>
+
+
+
+<body>
+<br>
+<br>
+<h2 class="text-center">修改信息</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-lg-offset-4">
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="tel">电话</label>
+                    <input type="text" class="form-control" name="tel" id="tel" value="{{ login_user_tel }}">
+                </div>
+                <div class="form-group">
+                    <label for="address">地址</label>
+                    <input type="text" class="form-control" name="address" id="address" value="{{ login_user_address }}">
+                </div>
+
+
+
+                <!-- <a href="{% url "index" 0 %}" class="btn btn-success btn-default pull-right">返回</a> -->
+                <a href="#" onclick="javascript:history.back(-1);" class="btn btn-warning pull-right">返回到上一页</a>
+                <button type="submit" class="btn btn-success btn-default pull-right">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

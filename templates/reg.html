@@ -1,0 +1,84 @@
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+</head>
+<style>
+
+</style>
+
+<body>
+
+
+<h2 class="text-center">欢迎注册</h2>
+<di class="container">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-4">
+            <form action="" method="post"></form>
+            {% csrf_token %}
+            {% for field in reg_form %}
+                <div class="form-group">
+                    <label for="">{{ field.label }}</label>
+                    {{ field }}
+                    <span class="error"></span>
+                </div>
+
+            {% endfor %}
+            <br>
+            <a href="/login/" class="btn btn-success pull-right">返回</a>
+            <input type="button" class="btn btn-success pull-right reg_btn" value="注册">
+            <span class="error"></span>
+
+
+        </div>
+    </div>
+
+</di>
+
+
+
+
+<script src="/static/js/jquery.js"></script>
+<script>
+
+    $(".reg_btn").click(function () {
+
+        $.ajax(
+            {
+                url:'',
+                type:"post",
+                data:{
+                    user:$("#id_user").val(),
+                    pwd:$("#id_pwd").val(),
+                    re_pwd:$("#id_re_pwd").val(),
+                    gender:$("#id_gender").val(),
+                    address:$("#id_address").val(),
+                    tel:$("#id_tel").val(),
+                    csrfmiddlewaretoken:$("[name=csrfmiddlewaretoken]").val(),
+                },
+                success:function (response) {
+                    if(response.user){
+                        location.href="/login/"
+                    }else{
+                        console.log(response.error_msg)
+                        $(".error").html("")
+                        $(".form-group").removeClass("has-error");
+                        $.each(response.error_msg,function(i,j){
+                            $("#id_"+i).next().html(j[0]).css("color","red").parent().addClass("has-error")
+                        })
+                    }
+                }
+            })
+
+    })
+
+</script>
+
+
+</body>
+</html>
+
+
+
